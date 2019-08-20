@@ -28,10 +28,10 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: traefik-conf
+            name: traefik-config 
         - name: ssl
           secret:
-            secretName: traefik-cert
+            secretName: traefik-ui-tls-cert
       containers:
       - image: traefik
         name: traefik-ingress-lb
@@ -46,8 +46,8 @@ spec:
         - name: admin
           containerPort: 8080
         args:
-        - --configfile=/config/traefik.toml
         - --api
+        - --configfile=/config/traefik.toml
         - --kubernetes
         - --logLevel=INFO
 ---
@@ -66,4 +66,7 @@ spec:
     - protocol: TCP
       port: 8080
       name: admin
+    - protocol: TCP
+      port: 443
+      name: https
   type: LoadBalancer
