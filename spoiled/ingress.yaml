@@ -1,0 +1,38 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: spoiled-ingress
+  namespace: spoiled
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: spoiled.pdnlabs.com
+spec:
+  rules:
+  - host: spoiled.pdnlabs.com
+    http:
+      paths:
+      - backend:
+          serviceName: spoiled
+          servicePort: web
+  tls:
+    - secretName: pdnlabs-com-tls
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: spoiled
+  namespace: spoiled
+spec:
+  selector:
+    app: spoiled
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443

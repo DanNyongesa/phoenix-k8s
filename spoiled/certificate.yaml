@@ -2,20 +2,21 @@
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: pdnlabs-com
-  namespace: traefik
+  name: spoiled-pdnlabs-com
+  namespace: spoiled
 spec:
-  secretName: pdnlabs-com-tls
+  secretName: spoiled-pdnlabs-com-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: "*.pdnlabs.com"
+  commonName: "spoiled.pdnlabs.com"
   dnsNames:
-  - pdnlabs.com
+  - "spoiled.pdnlabs.com"
+  - "www.spoiled.pdnlabs.com"
   acme:
     config:
     - dns01:
-        provider: azuredns
+        provider: phoenix-dns
       domains:
-      - "*.pdnlabs.com"
-      - "pdnlabs.com"
+      - "spoiled.pdnlabs.com"
+      - "www.spoiled.pdnlabs.com"
