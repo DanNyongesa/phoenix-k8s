@@ -30,4 +30,4 @@ spec:
           serviceName: traefik-web-ui
           servicePort: web
   tls:
-    - secretName: traefik-ui-tls-cert
+    - secretName: traefik-ui-pdnlabs-com-tls

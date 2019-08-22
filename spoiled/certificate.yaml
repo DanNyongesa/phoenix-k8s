@@ -1,0 +1,21 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: pdnlabs-com
+  namespace: traefik
+spec:
+  secretName: pdnlabs-com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: "*.pdnlabs.com"
+  dnsNames:
+  - pdnlabs.com
+  acme:
+    config:
+    - dns01:
+        provider: azuredns
+      domains:
+      - "*.pdnlabs.com"
+      - "pdnlabs.com"
