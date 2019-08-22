@@ -1,0 +1,38 @@
+kind: ConfigMap
+metadata:
+  name: traefik-config
+  namespace: kube-system
+data:
+  traefik.toml: |
+    # traefik.toml
+    defaultEntryPoints = ["http","https"]
+    debug = false
+    logLevel = "INFO"
+
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+      compress = true
+        [entryPoints.http.redirect]
+          entryPoint = "https"
+      [entryPoints.https]
+      address = ":443"
+        compress = true
+        [entryPoints.https.tls]
+
+    [ping]
+      entryPoint = "http"
+    
+    [acme]
+    email = "dan.nyongesa@outlook.com"
+    storage = "traefik-certificates/acme/account"
+    acmeLogging = true
+    entryPoint = "https"
+    onHostRule = true
+    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      [acme.dnsChallenge]
+      provider = "azure"
+      delayBeforeCheck = 0
+
+
+

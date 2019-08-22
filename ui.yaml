@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: traefik-web-ui
   namespace: kube-system
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: traefik-ui.pdnlabs.com
 spec:
   selector:
     k8s-app: traefik-ingress-lb
@@ -18,14 +20,14 @@ metadata:
   namespace: kube-system
   annotations:
     kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: traefik-ui.pdnlabs.com
 spec:
   rules:
   - host: traefik-ui.pdnlabs.com
     http:
       paths:
-      - path: /
-        backend:
+      - backend:
           serviceName: traefik-web-ui
           servicePort: web
   tls:
-    - secretName: traefik-cert
+    - secretName: traefik-ui-tls-cert
