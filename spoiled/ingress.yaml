@@ -16,7 +16,7 @@ spec:
           serviceName: spoiled
           servicePort: web
   tls:
-    - secretName: pdnlabs-com-tls
+    - secretName: spoiled-pdnlabs-com-tls
 ---
 
 kind: Service
