@@ -1,0 +1,22 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: ussd-demo-pdnlabs-com
+  namespace: ussd-demo
+spec:
+  secretName: ussd-demo-pdnlabs-com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: "ussd-demo.pdnlabs.com"
+  dnsNames:
+  - "ussd-demo.pdnlabs.com"
+  - "www.ussd-demo.pdnlabs.com"
+  acme:
+    config:
+    - dns01:
+        provider: phoenix-dns
+      domains:
+      - "ussd-demo.pdnlabs.com"
+      - "www.ussd-demo.pdnlabs.com"

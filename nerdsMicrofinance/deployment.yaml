@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ussd-demo
+  labels:
+    app: ussd-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ussd-demo
+  template:
+    metadata:
+      labels:
+        app: ussd-demo
+    spec:
+      containers:
+      - name: ussd-demo
+        image: gcr.io/bamboo-insight-254/ussd-demo:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+          limits:
+            memory: 256Mi
+        ports:
+        - containerPort: 8080
+        env:
+          - name: SQLALCHEMY_DATABASE_URI
+            value: "postgresql://postgres:sWH2UnhsnCUa3rE8@postgres:5432/ussd-demo"
+          - name: APP_ENVIRONMENT
+            value: "production"
+          - name: APP_HOSTNAME
+            value: ussd-demo
+          - name: APP_SECRET_KEY
+            value: "s8kc5RQuc0kcHq47LdAwukdHhHA0chj6"
+          - name: REDIS_HOST
+            value: "redis-cache"
+          - name: REDIS_PASSWORD
+            value: 33gKn2eZOYISeXvPVmWwxg+5LJg04kBASJLiB5AcZkNZOFqNmv0u7UcduDo1Lia9OsKEJqRKBu2rXV29
+          - name: REDIS_PORT
+            value: "6381"
+          - name: FLASK_APP
+            value: "app.py"
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ussd-demo-autoscaler
+  labels:
+    app: ussd-demo
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ussd-demo
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80 # 40% of 3 requested cpu = 1.2 cores
