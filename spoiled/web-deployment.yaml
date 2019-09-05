@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spoiled
-        image: gcr.io/bamboo-insight-254/spoiled:latest
+        image: phoenix.azurecr.io/spoiled:latest
         imagePullPolicy: Always
         resources:
           requests:

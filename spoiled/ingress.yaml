@@ -14,7 +14,7 @@ spec:
       paths:
       - backend:
           serviceName: spoiled
-          servicePort: web
+          servicePort: http
   tls:
     - secretName: spoiled-pdnlabs-com-tls
 ---
@@ -32,7 +32,3 @@ spec:
     protocol: TCP
     port: 80
     targetPort: 8080
-  - name: https
-    protocol: TCP
-    port: 443
-    targetPort: 443

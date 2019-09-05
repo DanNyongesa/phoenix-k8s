@@ -1,0 +1,49 @@
+---
+# database
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres
+  namespace: spoiled
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+    targetPort: 5432
+---
+
+# redis
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis-cache
+  namespace: spoiled
+spec:
+  type: ClusterIP
+  ports:
+  - port: 6381
+    targetPort: 6381
+---
+
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: postgres
+  namespace: spoiled
+subsets:
+- addresses:
+    - ip: 10.240.0.66
+  ports:
+    - port: 5432
+---
+
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: redis-cache
+  namespace: spoiled
+subsets:
+- addresses:
+    - ip: 10.240.0.66
+  ports:
+    - port: 6381
