@@ -28,17 +28,17 @@ spec:
         - containerPort: 8080
         env:
           - name: SQLALCHEMY_DATABASE_URI
-            value: "postgresql://postgres:sWH2UnhsnCUa3rE8@postgres:5432/ussd-demo"
+            value: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/ussd-demo"
           - name: APP_ENVIRONMENT
             value: "production"
           - name: APP_HOSTNAME
             value: ussd-demo
           - name: APP_SECRET_KEY
-            value: "s8kc5RQuc0kcHq47LdAwukdHhHA0chj6"
+            value: "${APP_SECRET}"
           - name: REDIS_HOST
             value: "redis-cache"
           - name: REDIS_PASSWORD
-            value: 33gKn2eZOYISeXvPVmWwxg+5LJg04kBASJLiB5AcZkNZOFqNmv0u7UcduDo1Lia9OsKEJqRKBu2rXV29
+            value: ${REDIS_PASSWORD}
           - name: REDIS_PORT
             value: "6381"
           - name: FLASK_APP
